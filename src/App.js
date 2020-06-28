@@ -1,6 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux'
+import createSagaMiddleware from 'redux-saga';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,6 +13,9 @@ import NewDeck from './components/NewDeck'
 import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import Deck from './components/Deck'
+import reducer from './reducers'
+
+import rootSaga from './sagas';
 
 //Bottom tab navigator
 const Tab = createBottomTabNavigator();
@@ -51,10 +55,20 @@ function MainNavigator() {
   );
 }
 
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+    reducer,
+    applyMiddleware(sagaMiddleware)
+  );
+
+sagaMiddleware.run(rootSaga);
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <MainNavigator />
-    </NavigationContainer>
+    <Provider store={store} >
+      <NavigationContainer>
+        <MainNavigator />
+      </NavigationContainer>
+    </Provider>
   );
 }
