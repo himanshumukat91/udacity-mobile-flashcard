@@ -3,11 +3,12 @@ import { SafeAreaView, Text, StyleSheet } from 'react-native'
 
 export default class NewDeck extends React.Component {
     render() {
+        const { route } = this.props;
+        const quiz = route.params.quiz;
         return(
             <SafeAreaView style={styles.container}>
-                <Text>
-                    Start Quiz
-                </Text>
+                <Text>Start Quiz</Text>
+                <Text>{JSON.stringify(quiz)}</Text>
             </SafeAreaView>
         )
     }

@@ -48,7 +48,9 @@ function MainNavigator() {
             headerBackTitleVisible: false
           }}>
       <Stack.Screen name="Home" component={Tabs} />
-      <Stack.Screen name="Deck" component={Deck} />
+      <Stack.Screen name="Deck" component={Deck} options={({ route }) => ({
+        title: route.params.title
+      })} />
       <Stack.Screen name="AddCard" component={AddCard} />
       <Stack.Screen name="Quiz" component={Quiz} />
     </Stack.Navigator>

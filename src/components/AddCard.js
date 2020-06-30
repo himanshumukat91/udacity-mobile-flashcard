@@ -3,10 +3,12 @@ import { SafeAreaView, Text, StyleSheet } from 'react-native'
 
 export default class NewDeck extends React.Component {
     render() {
+        const { route } = this.props;
+        const title = route.params.title;
         return(
             <SafeAreaView style={styles.container}>
                 <Text>
-                    Add New Card
+                    Add New Card to {title}
                 </Text>
             </SafeAreaView>
         )

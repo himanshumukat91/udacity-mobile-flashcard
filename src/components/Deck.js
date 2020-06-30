@@ -1,21 +1,24 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-export default class Deck extends React.Component {
+class Deck extends React.Component {
     render() {
-        const { navigation } = this.props;
+        const { navigation, route, decks } = this.props;
+        const deckTitle = route.params.title;
+        const deckInfo = decks[deckTitle];
+        
         return(
             <SafeAreaView style={styles.container}>
-                <Text>
-                    Deck Details
-                </Text>
+                <Text>{deckInfo.title}</Text>
+                <Text>{`${deckInfo.questions.length} Cards`}</Text>
                 <View>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('AddCard')}>
+                        onPress={() => navigation.navigate('AddCard', {title: deckInfo.title})}>
                         <Text>Add Card</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Quiz')}>
+                        onPress={() => navigation.navigate('Quiz', {quiz: deckInfo.questions})}>
                         <Text>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
@@ -31,3 +34,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     }
 })
+
+export default connect(
+    (state) => ({
+        decks: state
+    }),
+    {},
+)(Deck);
