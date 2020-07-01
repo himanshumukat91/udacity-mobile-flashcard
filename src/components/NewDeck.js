@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, TextInput } from 'react-native'
 
 import { saveDeck } from '../actions'; 
+import { forInStatement } from '@babel/types';
 
 class NewDeck extends React.Component {
     state = {
@@ -32,15 +33,15 @@ class NewDeck extends React.Component {
     render() {
         return(
             <SafeAreaView style={styles.container}>
-                <Text>
-                    Deck Title
+                <Text style={styles.title}>
+                    Please Enter Deck Title
                 </Text>    
                 <TextInput
                     style={styles.inputContainer}
                     onChangeText={text => this.onChangeText(text)}
                     value={this.state.deckName}
                 />
-                <TouchableOpacity
+                <TouchableOpacity style={styles.button}
                     onPress={this.saveDeck}>
                     <Text>Submit</Text>
                 </TouchableOpacity>
@@ -55,10 +56,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    title: {
+        margin: 10,
+        marginBottom: 20,
+        fontSize: 20,
+    },
     inputContainer: {
         height: 40, 
         borderColor: 'gray', 
-        borderWidth: 1
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 5,
+        minWidth: '80%',
+    },
+    button: {
+        margin: 10,
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'lightblue',
+        borderRadius: 5,
+        minWidth: '50%',
+        textAlign: 'center',
     }
 })
 

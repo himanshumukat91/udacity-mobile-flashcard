@@ -3,6 +3,8 @@ import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity, FlatList } from
 import { connect } from 'react-redux'
 
 import { getDecks } from '../actions'
+import { color } from 'react-native-reanimated'
+import { grey } from 'color-name'
 
 
 const Deck = ({deck, navigation}) => {
@@ -43,16 +45,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     deckCard: {
-        backgroundColor: '#f9c2ff',
+        backgroundColor: 'lightblue',
         padding: 20,
         marginVertical: 8,
-        marginHorizontal: 16,
+        marginHorizontal: 8,
+        borderRadius: 5,
     },
     title: {
-        fontSize: 30,
+        fontSize: 20,
     },
     subTitle: {
-        fontSize: 20
+        fontSize: 15,
+        color: 'grey'
     }
 })
 

@@ -31,20 +31,19 @@ class AddCard extends React.Component {
         const title = route.params.title;
         return(
             <SafeAreaView style={styles.container}>
-                <Text>
-                    Add New Card to {title}
-                </Text>  
+                <Text style={styles.title}>Question</Text>  
                 <TextInput
                     style={styles.inputContainer}
                     onChangeText={text => this.onChangeQuestion(text)}
                     value={this.state.question}
                 />
+                <Text style={styles.title}>Answer</Text>  
                 <TextInput
-                    style={styles.inputContainer}
+                    style={[styles.inputContainer, styles.inputAnswerContainer]}
                     onChangeText={text => this.onChangeAnswer(text)}
                     value={this.state.answer}
                 />
-                <TouchableOpacity
+                <TouchableOpacity style={styles.button}
                     onPress={this.saveCard}>
                     <Text>Add Card</Text>
                 </TouchableOpacity>
@@ -59,10 +58,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    title: {
+        margin: 10,
+        marginTop: 20,
+        fontSize: 20,
+        color: 'gray'
+    },
     inputContainer: {
-        height: 40, 
+        height: 80, 
         borderColor: 'gray', 
-        borderWidth: 1
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 5,
+        minWidth: '80%',
+    },
+    inputAnswerContainer: {
+        height: 120,
+    },
+    button: {
+        margin: 10,
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'lightblue',
+        borderRadius: 5,
+        minWidth: '50%',
+        textAlign: 'center',
     }
 })
 
