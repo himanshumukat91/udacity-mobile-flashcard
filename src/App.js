@@ -51,8 +51,10 @@ function MainNavigator() {
       <Stack.Screen name="Deck" component={Deck} options={({ route }) => ({
         title: route.params.title
       })} />
-      <Stack.Screen name="AddCard" component={AddCard} />
-      <Stack.Screen name="Quiz" component={Quiz} />
+      <Stack.Screen name="AddCard" component={AddCard} options={{title: 'Add Card'}}/>
+      <Stack.Screen name="Quiz" component={Quiz} options={({ route }) => ({
+        title: `${route.params.title} Quiz`
+      })}/>
     </Stack.Navigator>
   );
 }

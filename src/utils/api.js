@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 export const AYSNC_KEY = 'key:flashcards'
 
 let initDecks = {
-    React: {
+    'React': {
         title: 'React',
         questions: [
             {
@@ -16,7 +16,7 @@ let initDecks = {
             },
         ]
     },
-    Datastructures: {
+    'Data Structures': {
         title: 'Data Structures',
         questions: [
             {

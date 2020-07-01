@@ -21,7 +21,7 @@ export const saveDeck = (deck) => ({
     deck
 });
 
-export const saveCardToDeck = (title, card) => ({
+export const addCardToDeck = (title, card) => ({
     type: ADD_CARD_TO_DECK,
     title,
     card

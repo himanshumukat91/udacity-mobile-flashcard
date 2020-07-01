@@ -5,23 +5,27 @@ import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity } from 'react-na
 class Deck extends React.Component {
     render() {
         const { navigation, route, decks } = this.props;
-        const deckTitle = route.params.title;
-        const deckInfo = decks[deckTitle];
+        const { title } = route.params;
+        const deckInfo = decks[title];
         
         return(
             <SafeAreaView style={styles.container}>
-                <Text>{deckInfo.title}</Text>
-                <Text>{`${deckInfo.questions.length} Cards`}</Text>
-                <View>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('AddCard', {title: deckInfo.title})}>
-                        <Text>Add Card</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('Quiz', {quiz: deckInfo.questions})}>
-                        <Text>Start Quiz</Text>
-                    </TouchableOpacity>
-                </View>
+                {deckInfo
+                ?(<View>
+                    <Text>{deckInfo.title}</Text>
+                    <Text>{`${deckInfo.questions.length} Cards`}</Text>  
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('AddCard', {title})}>
+                            <Text>Add Card</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Quiz', {title})}>
+                            <Text>Start Quiz</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>)
+                :<Text>Deck not found</Text>}
             </SafeAreaView>
         )
     }
