@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Animated, Easing } from 'react-native'
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Animated } from 'react-native'
 
 import ButtonText from './ButtonText'
 import { clearLocalNotification, setLocalNotification} from '../utils/helpers'

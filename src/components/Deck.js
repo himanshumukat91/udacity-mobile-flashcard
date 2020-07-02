@@ -1,11 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet, Animated } from 'react-native'
 
 import { deleteDeck } from '../actions'
 import ButtonText from './ButtonText'
 
 class Deck extends React.Component {
+    constructor() {
+        super()
+        this.opacity = new Animated.Value(0)
+    }
+
+    componentDidMount() {
+        Animated.timing(this.opacity, {
+            toValue: 1,
+            duration: 1500,
+            useNativeDriver: true
+        }).start();
+    }
+
     deleteDeck = () => {
         const { title, navigation, deleteDeck } = this.props;
         deleteDeck(title);
@@ -23,11 +36,12 @@ class Deck extends React.Component {
     render() {
         const { navigation, deckInfo, title } = this.props;
         const numOfQuestions = deckInfo?deckInfo.questions.length:0;
+        const animatedStyle = { opacity: this.opacity }
 
         return(
             <SafeAreaView style={styles.container}>
                 {deckInfo
-                ?(<View style={styles.container}>
+                ?(<Animated.View style={[styles.container, animatedStyle]}>
                     <Text style={styles.title}>{deckInfo.title}</Text>
                     <Text style={styles.subtitle}>{`${numOfQuestions} Cards`}</Text>  
                     <View style={styles.fullWidth}>
@@ -38,7 +52,7 @@ class Deck extends React.Component {
                     <ButtonText text='Delete Deck' 
                         onPress={this.deleteDeck} />
                     </View>
-                </View>)
+                </Animated.View>)
                 :<Text>Deck not found</Text>}
             </SafeAreaView>
         )
