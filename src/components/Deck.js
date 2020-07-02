@@ -12,20 +12,29 @@ class Deck extends React.Component {
         navigation.navigate('Home');
     }
 
+    startQuiz = (numOfQuestions) => {
+        const { navigation, title } = this.props;
+
+        //Start quiz only if there is atleast one card
+        if(numOfQuestions)
+            navigation.navigate('Quiz', {title})
+    }
+
     render() {
         const { navigation, deckInfo, title } = this.props;
-        
+        const numOfQuestions = deckInfo?deckInfo.questions.length:0;
+
         return(
             <SafeAreaView style={styles.container}>
                 {deckInfo
                 ?(<View style={styles.container}>
                     <Text style={styles.title}>{deckInfo.title}</Text>
-                    <Text style={styles.subtitle}>{`${deckInfo.questions.length} Cards`}</Text>  
+                    <Text style={styles.subtitle}>{`${numOfQuestions} Cards`}</Text>  
                     <View style={styles.fullWidth}>
                     <ButtonText text='Add Card' 
                         onPress={() => navigation.navigate('AddCard', {title})} />
-                    <ButtonText text='Start Quiz' 
-                        onPress={() => navigation.navigate('Quiz', {title})} />
+                    <ButtonText text='Start Quiz' style={numOfQuestions?{}:styles.disabled}
+                        onPress={() => this.startQuiz(numOfQuestions)} />
                     <ButtonText text='Delete Deck' 
                         onPress={this.deleteDeck} />
                     </View>
@@ -73,4 +82,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'stretch'
     },
+    disabled: {
+        backgroundColor: 'lightgray'
+    }
 })

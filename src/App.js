@@ -14,6 +14,7 @@ import AddCard from './components/AddCard'
 import Quiz from './components/Quiz'
 import Deck from './components/Deck'
 import reducer from './reducers'
+import { setLocalNotification } from './utils/helpers'
 
 import rootSaga from './sagas';
 
@@ -67,12 +68,19 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-export default function App() {
-  return (
-    <Provider store={store} >
-      <NavigationContainer>
-        <MainNavigator />
-      </NavigationContainer>
-    </Provider>
-  );
+export default class App extends React.Component {
+
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={store} >
+        <NavigationContainer>
+          <MainNavigator />
+        </NavigationContainer>
+      </Provider>
+    );
+  }
 }

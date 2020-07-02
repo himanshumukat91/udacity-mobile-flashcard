@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         fontSize: 20,
         color: 'gray',
-        height: 20,
     },
     inputContainer: {
         borderColor: 'gray', 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Animated, Easing } from 'react-native'
 
 import ButtonText from './ButtonText'
+import { clearLocalNotification, setLocalNotification} from '../utils/helpers'
 
 class NewDeck extends React.Component {
     constructor(){
@@ -19,11 +20,13 @@ class NewDeck extends React.Component {
         Animated.sequence([
         Animated.timing(this.opacity, {
                 toValue: 0.1,
-                duration: 1
+                duration: 1,
+                useNativeDriver: true
             }),
             Animated.timing(this.opacity, {
                 toValue: 1,
-                duration: value
+                duration: value,
+                useNativeDriver: true
             })
         ]).start()
     }
@@ -44,15 +47,27 @@ class NewDeck extends React.Component {
         this.setState(() => ({displayingAnswer:!this.state.displayingAnswer}))
     }
 
+    resetQuiz = () => {
+        this.setState({
+            currentQuestion: 1,
+            correctAnswers: 0
+        });
+    }
+
     getResultCard = ({correctAnswers, total, title}) => {
         const {navigation} = this.props;
 
+        //Reset notification upon completing quiz
+        clearLocalNotification().then(setLocalNotification);
+
         return(
             <View style={styles.resultContainer}>
-                <Text style={styles.resultTitle}>CONGRATULATIONS!</Text>
+                <Text style={styles.resultTitle}>{`QUIZ COMPLETED! (${(100*correctAnswers/total).toFixed(2)}%)`}</Text>
                 <Text style={styles.resultSubTitle}>{`Correct : ${correctAnswers}`}</Text>
                 <Text style={styles.resultSubTitle}>{`Total : ${total}`}</Text>
-                <ButtonText text={`Back to ${title}`} 
+                <ButtonText text={`Restart Quiz`} 
+                    onPress={this.resetQuiz}/>
+                <ButtonText text={`Back to Deck`} 
                     onPress={() => navigation.navigate('Deck', {title})}/>
             </View>
         )
@@ -154,6 +169,7 @@ const styles = StyleSheet.create({
         color: 'green',
         fontSize: 20,
         marginBottom: 20,
+        alignSelf: 'center',
     },
     resultSubTitle: {
         fontSize: 15
