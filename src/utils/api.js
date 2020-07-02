@@ -58,7 +58,7 @@ export const saveDeck = (deck) => {
     });
 }
 
-export const addCardToDeck = (title, card) =>
+export const addCardToDeck = (title, card) => {
   AsyncStorage.getItem(AYSNC_KEY)
     .then(JSON.parse)
     .then(decks => {
@@ -72,3 +72,14 @@ export const addCardToDeck = (title, card) =>
       return AsyncStorage.setItem(AYSNC_KEY, JSON.stringify(newDeck))
         .then(() => ({ title, card }))
     })
+}
+
+export const deleteDeck = (id) => {
+    return AsyncStorage.getItem(AYSNC_KEY)
+    .then(data => {
+        let decks = JSON.parse(data);
+        delete decks[id];
+        AsyncStorage.setItem(AYSNC_KEY, JSON.stringify(decks))
+        return decks;
+    });
+}

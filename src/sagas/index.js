@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import { getDecks, saveDeck, addCardToDeck } from '../utils/api';
+import { getDecks, saveDeck, addCardToDeck, deleteDeck } from '../utils/api';
 
 function* getDecksFromStorage() {
     try{
@@ -30,11 +30,21 @@ function* saveCardToStorage(action) {
     }
 }
 
+function* deleteDeckFromStorage(action) {
+    try{
+        const result = yield call(deleteDeck, action.id);  
+        yield put({ type: "GET_DECKS_SUCCESS", decks: result });
+    } catch(e) {
+        console.log(e);
+    }
+}
+
 function* actionWatcher() {
     try{
         yield takeEvery('GET_DECKS', getDecksFromStorage);
         yield takeEvery('SAVE_DECK', saveDeckToStorage);
         yield takeEvery('ADD_CARD_TO_DECK', saveCardToStorage);
+        yield takeEvery('DELETE_DECK', deleteDeckFromStorage);
     }catch(e){
         console.log(`Error in Saga ${e}`)
     }

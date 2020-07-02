@@ -2,6 +2,7 @@ export const GET_DECKS = 'GET_DECKS';
 export const GET_DECK = 'GET_DECK';
 export const SAVE_DECK = 'SAVE_DECK';
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK';
+export const DELETE_DECK = 'DELETE_DECK';
 
 export const GET_DECKS_SUCCESS = 'GET_DECKS_SUCCESS';
 export const SAVE_DECK_SUCCESS = 'SAVE_DECK_SUCCESS';
@@ -25,4 +26,9 @@ export const addCardToDeck = (title, card) => ({
     type: ADD_CARD_TO_DECK,
     title,
     card
+});
+
+export const deleteDeck = (id) => ({
+    type: DELETE_DECK,
+    id
 });

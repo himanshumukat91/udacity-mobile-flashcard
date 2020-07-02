@@ -1,10 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { SafeAreaView, View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native'
+
+import { deleteDeck } from '../actions'
+import ButtonText from './ButtonText'
 
 class Deck extends React.Component {
+    deleteDeck = () => {
+        const { title, navigation, deleteDeck } = this.props;
+        deleteDeck(title);
+        navigation.navigate('Home');
+    }
+
     render() {
-        const { navigation, route, deckInfo, title } = this.props;
+        const { navigation, deckInfo, title } = this.props;
         
         return(
             <SafeAreaView style={styles.container}>
@@ -13,14 +22,12 @@ class Deck extends React.Component {
                     <Text style={styles.title}>{deckInfo.title}</Text>
                     <Text style={styles.subtitle}>{`${deckInfo.questions.length} Cards`}</Text>  
                     <View style={styles.fullWidth}>
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => navigation.navigate('AddCard', {title})}>
-                            <Text>Add Card</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => navigation.navigate('Quiz', {title})}>
-                            <Text>Start Quiz</Text>
-                        </TouchableOpacity>
+                    <ButtonText text='Add Card' 
+                        onPress={() => navigation.navigate('AddCard', {title})} />
+                    <ButtonText text='Start Quiz' 
+                        onPress={() => navigation.navigate('Quiz', {title})} />
+                    <ButtonText text='Delete Deck' 
+                        onPress={this.deleteDeck} />
                     </View>
                 </View>)
                 :<Text>Deck not found</Text>}
@@ -28,6 +35,21 @@ class Deck extends React.Component {
         )
     }
 }
+
+export default connect(
+    (state, props) => {
+        const { route } = props;
+        const { title } = route.params;
+        const deckInfo = state[title];
+        return {
+            deckInfo,
+            title
+        }
+    },
+    {
+        deleteDeck
+    },
+)(Deck);
 
 const styles = StyleSheet.create({
     container: {
@@ -51,27 +73,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'stretch'
     },
-    button: {
-        margin: 10,
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: 'lightblue',
-        borderRadius: 5,
-        width: '50%',
-        textAlign: 'center',
-    }
 })
-
-export default connect(
-    (state, props) => {
-        const { route } = props;
-        const { title } = route.params;
-        const deckInfo = state[title];
-
-        return {
-            deckInfo,
-            title
-        }
-    },
-    {},
-)(Deck);
